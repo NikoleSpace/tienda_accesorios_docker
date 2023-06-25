@@ -3,18 +3,18 @@ from flask_cors import CORS
 from flaskext.mysql import MySQL #pip install flask-mysql
 import pymysql
  
-MEMBERS = [
+PRODUCTOS = [
     {
         'id': '1',
-        'firstname': 'cairocoders',
-        'lastname': 'Ednalan',
-        'address': 'Olongapo city'
+        'nombre': 'Funda rosada',
+        'descripcion': 'modelo Iphone X',
+        'precio': '45.00'
     },
     {
         'id': '2',
-        'firstname': 'clydey',
-        'lastname': 'Ednalan',
-        'address': 'Angles city'
+        'nombre': 'Mica vidrio',
+        'descripcion': 'modelo Samsung A20',
+        'precio': '10.50'
     }
 ]
 # configuration
@@ -27,9 +27,9 @@ app.config.from_object(__name__)
 mysql = MySQL()
     
 app.config['MYSQL_DATABASE_USER'] = 'support'
-app.config['MYSQL_DATABASE_PASSWORD'] = 'sistemas20.'
-app.config['MYSQL_DATABASE_DB'] = 'dockercrud'
-app.config['MYSQL_DATABASE_HOST'] = '54.162.203.11'
+app.config['MYSQL_DATABASE_PASSWORD'] = 'ubuntu01'
+app.config['MYSQL_DATABASE_DB'] = 'tienda_accesorios'
+app.config['MYSQL_DATABASE_HOST'] = '54.89.177.242'
 mysql.init_app(app)
  
 # enable CORS
@@ -41,11 +41,11 @@ CORS(app, resources={r'/*': {'origins': '*'}})
 def ping_pong():
     return jsonify('pong!')
  
-@app.route('/members', methods=['GET'])
-def all_members():
+@app.route('/productos', methods=['GET'])
+def all_productos():
     return jsonify({
         'status': 'success',
-        'members': MEMBERS
+        'productos': PRODUCTOS
     })
  
 @app.route('/')
@@ -53,11 +53,11 @@ def home():
     conn = mysql.connect()
     cursor = conn.cursor(pymysql.cursors.DictCursor)
     try:
-        cursor.execute("SELECT * from members order by id")
+        cursor.execute("SELECT * from productos order by id")
         userslist = cursor.fetchall()
         return jsonify({
             'status': 'success',
-            'members': userslist
+            'productos': userslist
         })
     except Exception as e:
         print(e)
@@ -94,7 +94,7 @@ def edit(id):
     conn = mysql.connect()
     cursor = conn.cursor(pymysql.cursors.DictCursor)
     print(id)
-    cursor.execute("SELECT * FROM members WHERE id = %s", [id])
+    cursor.execute("SELECT * FROM productos WHERE id = %s", [id])
     row = cursor.fetchone() 
  
     return jsonify({

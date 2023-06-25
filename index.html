@@ -5,13 +5,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link type="text/css" rel="stylesheet" href="https://unpkg.com/bootstrap/dist/css/bootstrap.min.css" />
 <link type="text/css" rel="stylesheet" href="https://unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.min.css" />
-<title>Python Flask Vuejs CRUD (Create, Read, Update and Delete) with PHP Mysql</title>
+<title>TABLA PRODUCTOS</title>
 </head>
 <body>
 <div class="container" id="vuejscrudapp">
     <div class="row">
         <div class="col-md-12 mt-5">
-          <h1 class="text-center">Python Flask Vuejs CRUD (Create, Read, Update and Delete) with PHP Mysql</h1>
+          <h1 class="text-center">TABLA PRODUCTOS</h1>
           <hr>
         </div>
     </div>
@@ -25,15 +25,19 @@
               <div>
                 <form action="" @submit.prevent="onSubmit">
                   <div class="form-group">
-                    <label for="">First Name</label>
+                    <label for="">Nombre</label>
                     <input type="text" v-model="firstname" class="form-control">
                   </div>
                   <div class="form-group">
-                    <label for="">Last Name</label>
+                    <label for="">Descripcion</label>
                     <input type="text" v-model="lastname" class="form-control">
                   </div>
                   <div class="form-group">
-                    <label for="">Address</label>
+                    <label for="">Precio</label>
+                    <input type="text" v-model="address" class="form-control">
+                  </div>
+                  <div class="form-group">
+                    <label for="">Stock</label>
                     <input type="text" v-model="address" class="form-control">
                   </div>
                   <div class="form-group">
@@ -51,17 +55,21 @@
               <div>
                 <form action="" @submit.prevent="onUpdate">
                   <div class="form-group">
-                    <label for="">First Name</label>
+                    <label for="">Nombre</label>
                     <input type="text" v-model="edit_id">
                     <input type="text" v-model="edit_firstname" class="form-control">
                   </div>
                   <div class="form-group">
-                    <label for="">Last Name</label>
+                    <label for="">Descripcion</label>
                     <input type="text" v-model="edit_lastname" class="form-control">
                   </div>
                   <div class="form-group">
-                    <label for="">Address</label>
+                    <label for="">Precio</label>
                     <input type="text" v-model="edit_address" class="form-control">
+                  </div>
+                  <div class="form-group">
+                    <label for="">Stock</label>
+                    <input type="text" v-model="address" class="form-control">
                   </div>
                   <div class="form-group">
                     <button class="btn btn-sm btn-outline-info">Update Record</button>
@@ -81,18 +89,19 @@
             <thead>
               <tr>
                 <th>ID</th>
-                <th>First Name</th>
-                <th>Last Name</th>
-                <th>Address</th>
+                <th>Nombre</th>
+                <th>Descripcion</th>
+                <th>Precio</th>
+                <th>Stock</th>
                 <th>Action</th>
               </tr>
             </thead>
             <tbody>
               <tr v-for="(record, i) in records" :key="record.id">
                 <td>{{i + 1}}</td>
-                <td>{{record.firstname}}</td>
-                <td>{{record.lastname}}</td>
-                <td>{{record.address}}</td>
+                <td>{{record.nombre}}</td>
+                <td>{{record.descripcion}}</td>
+                <td>{{record.precio}}</td>
                 <td>
                   <button @click="deleteRecord(record.id)" class="btn btn-sm btn-outline-danger">Delete</button>
                   <button @click="editRecord(record.id)" class="btn btn-sm btn-outline-info">Edit</button>
@@ -113,14 +122,14 @@
     var app = new Vue({
         el: '#vuejscrudapp',
         data: {
-            firstname: '',
-            lastname: '',
-            address: '',
+            nombre: '',
+            descripcion: '',
+            precio: '',
             records: [],
             edit_id: '',
-            edit_firstname: '',
-            edit_lastname: '',
-            edit_address: ''
+            edit_nombre: '',
+            edit_descripcion: '',
+            edit_precio: ''
         },
   
         methods: {
@@ -165,7 +174,7 @@
                 })
                 .then(res => {
                   console.log(res)
-                  this.records = res.data.members
+                  this.records = res.data.productos
                 })
                 .catch(err => {
                   console.log(err)
