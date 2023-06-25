@@ -29,11 +29,11 @@ mysql = MySQL()
 app.config['MYSQL_DATABASE_USER'] = 'support'
 app.config['MYSQL_DATABASE_PASSWORD'] = 'sistemas20.'
 app.config['MYSQL_DATABASE_DB'] = 'dockercrud'
-app.config['MYSQL_DATABASE_HOST'] = '52.90.163.233'
+app.config['MYSQL_DATABASE_HOST'] = '54.162.203.11'
 mysql.init_app(app)
  
 # enable CORS
-CORS(app, resources={r'/': {'origins': ''}})
+CORS(app, resources={r'/*': {'origins': '*'}})
  
  
 # sanity check route
@@ -78,7 +78,6 @@ def insert():
  
         print(firstname)
         print(lastname)
-        print(address)
  
         sql = "INSERT INTO members(firstname,lastname,address) VALUES(%s, %s, %s)"
         data = (firstname, lastname, address)
@@ -138,5 +137,5 @@ def delete(id):
     response_object['message'] = "Successfully Deleted"
     return jsonify(response_object)
  
-if __name__ == '_main_':
+if __name__ == '__main__':
     app.run()
